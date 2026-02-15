@@ -1,0 +1,46 @@
+#!/bin/bash
+#Autor:Jorge Montero López
+#Fecha:11/02/2026
+
+clear
+
+echo "Autor: Jorge Montero López"
+
+if [ ! $# -eq 2 ]; then
+    echo "No se han introducido 2 parámetros"
+    exit
+fi
+
+fichero=$1
+dir=$2
+
+if [ -f "$fichero" ]; then
+    echo "Error, el fichero indicado existe"
+    exit
+fi
+
+if [ ! -d "$dir" ]; then
+    echo "Error, El directorio indicado no existe"
+    exit
+fi
+
+if [ ! -s "$dir" ]; then
+    echo "Error, el fichero indicado está vacío"
+    exit
+fi
+cont_fi=0
+for f in "$dir"/*.txt; do
+    li=$(wc -l < "$f")
+    if [ "$li" -ge 5 ]; then
+    	  nom=$(basename "$f")
+        echo "$nom"
+        echo "$nom" >> "$fichero"
+        num=$(wc -w < "$f") 
+        echo "El fichero original tiene $num palabras" >  "$f.q" 
+        cat "$f" >> "$f.q"
+
+    ((cont_fi +1))
+    fi
+done
+
+echo "Ficheros identificados $cont_fi"
