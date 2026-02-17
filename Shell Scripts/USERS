@@ -1,0 +1,36 @@
+#Autor:Jorge Montero López
+#Fecha:17/02/2026
+
+#!/bin/bash
+
+clear
+
+if [ ! $USER == root 2>/dev/null ];then
+
+    echo "El usuario no es root "
+    exit
+fi
+
+if [ $# -eq 1 ]; then
+
+    referencia=$1
+else
+    referencia=1000
+fi
+
+lineas=$(cat /etc/passwd)
+contador=0
+echo "================================================"
+echo "Informe de usuarios el día $(date +%d-%m-%Y) a las $(date +%H:%M)"
+for l in $lineas; do
+    u=$(echo $l | cut -d ":" -f 3 )
+    user=$(echo $l | cut -d ":" -f 1 )
+    if [ $u -gt $referencia 2>/dev/null ];then
+        echo "$user - $u"
+        contador=$((contador + 1))
+    fi
+done
+echo "Total: $contador usuarios"
+echo "================================================"
+aviso="$(date +%d-%m-%Y) - $(date +%H:%M) - El usuario $USER ha solicitado un informe de usuarios"
+echo "$aviso" >> /tmp/logeventos
