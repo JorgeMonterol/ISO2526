@@ -1,0 +1,57 @@
+#Autor:Jorge Montero López
+#Fecha:24/03/2026
+import subprocess
+import os
+from cpuinfo import get_cpu_info
+
+
+info = get_cpu_info()
+
+
+while True:
+   print("MENÚ DE OPCIONES:")
+   print("1: Muestra información del SSOO e información de la CPU")
+   print("2: Introduce el nombre de un usuario")
+   print("3: Pedir un directorio, si no es un directorio se creara")
+   print("4: Salir")
+   op=input("Elige una opción del menú"))
+   match op:
+       case 1:
+           print("---Información del Sistema Operativo---")
+           so=os.uname()
+           print("Sistema operativo:", so.sysname)
+           print("Nombe:", so.nodename)
+           print("Release:", so.release)
+           print("Version:", so.version)
+           print("Arquitectura:", so.machine)
+           print("Informacion de la CPU:")
+           print(info["brand_raw"])
+
+
+       case 2:
+           us=input("Introduce un nombre de usuario")
+		usuarios = open ("/etc/passwd")
+           if us in usuarios:
+               print("El usuario existe")
+           else:
+               os.system("useradd" + us)
+               print ("El usuario no existia, se ha creado")
+
+
+       case 3:
+           di=input("Introduce un directorio: ")
+           if os.path.isdir(di):
+               print ("Es un directorio")
+           else:
+               print("Se creará el directorio")
+               os.mkdir("di")
+
+
+       case 4:
+           exit()
+	  case_:
+		print("Opción incorrecta")
+
+
+ 
+
