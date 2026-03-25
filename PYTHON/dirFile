@@ -1,0 +1,67 @@
+#Fecha:25/03/2026
+#Autor:Jorge Montero López
+import os.path
+import shutil
+
+
+ruta = open("rutas.txt", "r")
+
+
+lineas = ruta.readlines()
+fichero=[]
+directorio=[]
+
+
+for i in lineas:
+   st = i.strip()
+   if os.path.isfile(st):
+       fichero.append(st)
+   if os.path.isdir(st):
+           directorio.append(st)
+while True:
+   print("MENÚ DE OPCIONES:")
+   print("A: Introduce el nombre de un fichero para eliminarlo")
+   print("B: Introduce el nombre de un directorio")
+   print("C: Introduce el nombre de un fichero, introduce el nombre de un destino para copiarlo")
+   print("D: Mostrar lista elegida por el usuario")
+   print("E: Salir")
+   op = input("Elige una opción del menú")
+   match op:
+       case "A":
+               nombre = input("Introduce el nombre de un fichero ")
+               if os.path.isfile(nombre):
+                   os.remove(nombre)
+                   print("El fichero se ha eliminado")
+               else:
+                   print("Error, no es un fichero o no existe")
+       case "B":
+               nom = input("Introduce el nombre de un directorio ")
+               if os.path.isdir(nom):
+                   print(os.listdir(nom))
+               else:
+                   print("No es un directorio")
+       case "C":
+               fich = input("Introduce el nombre de un fichero")
+               destino = input("Introduce el nombre de destino")
+               if os.path.isfile(fich):
+                   if os.path.isdir(destino):
+                       shutil.copy(fich,destino)
+                   else:
+                       print("El destino no existe")
+               else:
+                   print("El fichero introducido no existe")
+       case "D":
+               lista = input("Introduce el nombre de una lista")
+               if lista == "fichero":
+                   print(fichero)
+               elif lista == "directorio":
+                   print(directorio)
+                  
+               else:
+                   print("La lista no existe")
+
+
+       case "E":
+           print("Saliendo del menú de opciones")
+           break
+
